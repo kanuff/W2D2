@@ -1,3 +1,6 @@
+require 'byebug'
+
+
 module Slideable
   private 
   HORIZONTAL_DIRS = [
@@ -48,11 +51,14 @@ module Slideable
     x,y = current_pos
     step = [x+dx, y+dy]
     possible_moves = []
-    until board[step].color == self.color || !board.valid_pos?(step)
+    # debugger
+    until !board.valid_pos?(step) || board[step].color == self.color
+      # debugger
       possible_moves << step
-      break if board[step].color != :magenta
-      step[0] += dx 
-      step[1] += dy
+      break unless board[step].empty?
+      # step[0] += dx 
+      # step[1] += dy
+      step = [step[0] + dx, step[1] + dy]
     end
     possible_moves
   end

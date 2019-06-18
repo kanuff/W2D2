@@ -32,8 +32,8 @@ end
 
 board = Board.new
 display = Display.new(board)
-knight = Knight.new([0,1], board, :white)
-board[[0,1]] = knight
+# knight = Knight.new([0,1], board, :white)
+# board[[0,1]] = knight
 # p knight.moves
 # sleep(10)
 while true
@@ -44,19 +44,21 @@ while true
     if input
     
       start_pos = input
+      board[start_pos].valid_moves
+      # sleep(1)
       end_pos = nil
       until end_pos
         system("clear")
         display.render
         end_pos = display.cursor.get_input
       end
-      board.move_piece(:white, start_pos, end_pos)
+      board.move_piece(board[start_pos].color, start_pos, end_pos)
     end
   rescue NoPieceError
     puts "You didn't select a piece go again"
     retry
   rescue InvalidMoveError
-    puts "You can't move off the board"
+    puts "Invalid Move go again"
     retry
   end
   puts

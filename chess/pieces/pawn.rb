@@ -1,9 +1,9 @@
 require_relative "requirements"
+# require "byebug"
 
 class Pawn < Piece
 
   def initialize(pos, board, color)
-    @start_pos = pos
     super(pos, board, color)
   end
 
@@ -11,8 +11,10 @@ class Pawn < Piece
     :p
   end
 
-  def move_dirs
+  #move_dirs?
+  def moves
     possible_moves = forward_steps + side_attacks
+    # debugger
   end
 
 
@@ -20,41 +22,46 @@ class Pawn < Piece
   def at_start_row?
     case color 
     when :green
-      return true if pos[0] = 1
+      return true if current_pos[0] == 1
     when :white 
-      return true if pos[0] = 6
+      return true if current_pos[0] == 6
     end 
     false
   end
 
   def forward_dir
     if color == :green
-      -1
-    else
       1
+    else
+      -1
     end
   end
 
   def forward_steps
-    forward_moves = [forward_dir, 0]
-    if at_start_row
-      forward_moves += [forward_dir * 2, 0]
+    x, y = current_pos
+    forward_moves = [[x+forward_dir, y+0]]
+    if at_start_row?
+      forward_moves << [x+(forward_dir * 2), y+0]
     end
     forward_moves.select! {|position| board.valid_pos?(position)}
-    forward_moves.select! {|position| board[position].color == :magenta}
+    forward_moves.select! {|position| board[position].empty?}
+    forward_moves
   end
 
   def side_attacks
     x, y = current_pos 
     possible_attacks = []
     case color 
-    when :green 
-      possible_attacks = [[x-1, y-1], [x-1, y+1]]
     when :white 
+      possible_attacks = [[x-1, y-1], [x-1, y+1]]
+    when :green 
       possible_attacks = [[x+1, y-1], [x+1, y+1]]
     end 
-    possible_attacks
+    # debugger
     possible_attacks.select! {|position| board.valid_pos?(position)}
-    possible_attacks.reject! {|position| board[position].color == self.color || board[position].color = :magenta}
+    # debugger
+    possible_attacks.reject! {|position| board[position].color == self.color || board[position].empty?}
+    possible_attacks
+    # debugger
   end
 end

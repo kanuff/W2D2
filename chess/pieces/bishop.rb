@@ -1,6 +1,7 @@
 require_relative "requirements"
 
 class Bishop < Piece
+  include Slideable
   def intialize(pos, board, color)
     super(pos, board, color)
   end

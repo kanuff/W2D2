@@ -20,7 +20,19 @@ class Piece
    :P
   end
 
-  def moves
+  def pos=(pos)
+    @current_pos = pos
   end
+
+  def valid_moves
+    self.moves
+  end
+
+  def empty?
+    self.is_a?(NullPiece)
+  end
+
+
+
   
 end
