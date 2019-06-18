@@ -37,9 +37,9 @@ class Board
   end
 
   def move_piece(color, start_pos, end_pos)
-    if self[start_pos].nil?
+    if self[start_pos] == @nullPiece
       raise NoPieceError
-    elsif valid_pos?(end_pos)
+    elsif valid_pos?(end_pos) #&& temp_piece.moves.include?(end_pos)
       temp_piece = self[start_pos]
       self[start_pos] = @nullPiece
       self[end_pos] = temp_piece

@@ -39,15 +39,25 @@ board[[0,1]] = knight
 while true
   system("clear")
   display.render
-  input = display.cursor.get_input
-  if input
-    start_pos = input
-    end_pos = nil
-    until end_pos
-      end_pos = display.cursor.get_input
-      
+  begin
+    input = display.cursor.get_input
+    if input
+    
+      start_pos = input
+      end_pos = nil
+      until end_pos
+        system("clear")
+        display.render
+        end_pos = display.cursor.get_input
+      end
+      board.move_piece(:white, start_pos, end_pos)
     end
-    board.move_piece(:white, start_pos, end_pos)
+  rescue NoPieceError
+    puts "You didn't select a piece go again"
+    retry
+  rescue InvalidMoveError
+    puts "You can't move off the board"
+    retry
   end
   puts
 end
