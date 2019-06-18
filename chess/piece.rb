@@ -3,10 +3,10 @@ class Piece
   end
 
   def inspect
-    "p"
+    " p "
   end
 
   def to_s
-    "p"
+    " p "
   end
 end

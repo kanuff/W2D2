@@ -18,7 +18,7 @@ class Board
         end
       else
         8.times do |i|
-          row << 'x'
+          row << "   "
         end
       end
     end
