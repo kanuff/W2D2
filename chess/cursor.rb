@@ -78,9 +78,11 @@ class Cursor
 
   def handle_key(key)
     case key
-    when :return || :space
+    when :return
       cursor_pos
-    when :left #|| :right || :up || :down
+    when :space
+      cursor_pos
+    when :left
       update_pos(MOVES[key])
       nil
     when :right

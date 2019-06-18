@@ -1,4 +1,5 @@
-require_relative "piece"
+require_relative "pieces/requirements"
+
 
 class NoPieceError < StandardError
 end
@@ -10,15 +11,15 @@ class Board
   attr_reader :rows
   def initialize
     @rows = Array.new(8) {Array.new()}
-
+    @nullPiece = NullPiece.instance
     @rows.each_with_index do |row, idx|
       if idx.between?(0,1) || idx.between?(6,7)
         8.times do |i|
-          row << Piece.new
+          row << Piece.new([idx, i], self, :white)
         end
       else
         8.times do |i|
-          row << "   "
+          row << @nullPiece
         end
       end
     end
@@ -40,7 +41,7 @@ class Board
       raise NoPieceError
     elsif valid_pos?(end_pos)
       temp_piece = self[start_pos]
-      self[start_pos] = nil
+      self[start_pos] = @nullPiece
       self[end_pos] = temp_piece
     else  
       raise InvalidMove

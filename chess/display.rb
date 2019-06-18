@@ -32,9 +32,22 @@ end
 
 board = Board.new
 display = Display.new(board)
+knight = Knight.new([0,1], board, :white)
+board[[0,1]] = knight
+# p knight.moves
+# sleep(10)
 while true
   system("clear")
   display.render
-  display.cursor.get_input
+  input = display.cursor.get_input
+  if input
+    start_pos = input
+    end_pos = nil
+    until end_pos
+      end_pos = display.cursor.get_input
+      
+    end
+    board.move_piece(:white, start_pos, end_pos)
+  end
   puts
 end
