@@ -13,14 +13,15 @@ class Display
     @board.rows.each_with_index do |row, row_i|
       row.each_with_index do |col, col_i|
         current_pos = [row_i, col_i]
+        color = board[current_pos].color
         if current_pos == @cursor.cursor_pos
-          print board[current_pos].to_s.colorize(:background => :light_blue)
+          print board[current_pos].to_s.colorize(:color => color, :background => :magenta)
           print " "
         else
           background_color = :black
           background_color = :light_black if col_i.even? && row_i.even?
           background_color = :light_black if col_i.odd? && row_i.odd?
-          print board[current_pos].to_s.colorize(:background => background_color)
+          print board[current_pos].to_s.colorize(:color => color, :background => background_color)
           print " "
         end
       end
